@@ -1,7 +1,6 @@
 # Common python package imports.
 from flask import Flask, jsonify, request, render_template,Response
 import os 
-import jsonpickle
 import numpy as np 
 import cv2 
 from cloud_ocr.google_vision_main import detect_text

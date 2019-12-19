@@ -1,5 +1,5 @@
 from unidecode import unidecode
-from helper import (read_local_image, url_to_image, countLowerCase, countNumbers, countUpperCase, getTextGoogleOCR, remove_words, common_words, name_lines,
+from cloud_ocr.helper import (read_local_image, url_to_image, countLowerCase, countNumbers, countUpperCase, getTextGoogleOCR, remove_words, common_words, name_lines,
                     process_upper_words, save_cropped_name, extract_img_name, save_folder)
 import io
 from urllib.request import urlopen
@@ -13,14 +13,14 @@ import glob
 
 
 # construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--input", required=True,
-                help="the input folder containing images for OCR")
-ap.add_argument("-o", "--output",
-                help="the output folder containing json file")
-ap.add_argument("-c", "--choice", required=True,
-                help="1: process single ID image, 2: process a folder of ID images, 3: process passport image")
-args = vars(ap.parse_args())
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-i", "--input", required=True,
+#                 help="the input folder containing images for OCR")
+# ap.add_argument("-o", "--output",
+#                 help="the output folder containing json file")
+# ap.add_argument("-c", "--choice", required=True,
+#                 help="1: process single ID image, 2: process a folder of ID images, 3: process passport image")
+# args = vars(ap.parse_args())
 
 passport_letters = ["C","B","N","c","n","b"]
 
@@ -219,5 +219,5 @@ def main_run(args):
         print("Invalid option to process")
 
 
-if __name__ == '__main__':
-    main_run(args)
+# if __name__ == '__main__':
+#     main_run(args)

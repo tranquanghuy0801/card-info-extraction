@@ -44,7 +44,6 @@ with open(main_dir + "/" + args["test"], "r") as file:
     l = file.read().splitlines()
     l.sort(key=getFileNum, reverse = False)
     lines = l 
-print(lines)
 
 # Main run 
 with open(main_dir + "/" + args["reference"],"r") as file:
