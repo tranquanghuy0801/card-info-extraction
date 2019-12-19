@@ -1,0 +1,4 @@
+Similarity (ID: 100%, Name: 100%,DOB: 100%), Correct: (ID 10/10, Name 10/10, DOB 10/10) (Folder train_data - New National ID Cards)
+Similarity (ID:  99.206%, Name: 100%,DOB: 97.222%), Correct: (ID 17/18, Name 18/18, DOB 16/18) (Folder test_data - New National ID Cards)
+Similarity (ID: 100%, Name: 98.73%,DOB: 99.739%), Correct: (ID 51/51, Name 47/51, DOB 49/51) (Folder old_card - Old National ID Cards)
+Similarity (ID: 99.375%, Name: 92.976%,DOB: 98.125%), Correct: (ID 19/20, Name 13/20, DOB 18/20) (Folder passport - Passport Cards)

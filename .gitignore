@@ -1,0 +1,14 @@
+.vscode 
+__pycache__
+harry-ocr/ 
+old_card.zip
+local_ocr/
+data/old_card/*.jpg
+data/old_card/img/
+data/test_data/*.jpg
+data/train_data/*.jpg
+data/passport/*.jpg
+data/crop_name/*.jpg
+old_card.txt
+output.png 
+cards_data.zip
