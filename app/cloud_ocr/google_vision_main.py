@@ -72,10 +72,10 @@ def detect_text(num_choice, input_data, save_path=save_folder):
     upper_list = {}
 
     # Use local image
-    image = read_local_image(input_data)
+    # image = read_local_image(input_data)
 
     # Use url to read image
-    # image  = url_to_image(input_data)
+    image  = url_to_image(input_data)
     cv2.imwrite('output.png', image)
 
     # Get all text read by Google OCR
@@ -166,8 +166,6 @@ def detect_text(num_choice, input_data, save_path=save_folder):
 
         # Get the final card ID and DOB
         try:
-            if len(card_id) == 0:
-                card_id = None
             if len(num_list) > 0:
                 dob = num_list[0]
             else:
