@@ -22,3 +22,6 @@ python3 app/cloud_ocr/test_performance.py -t <test_file> -r <reference_file>
 ```
 
 ![screenshot  of command line](results/screenshot.jpg)
+
+
+[Data For Images](https://drive.base.vn/huytran02-drive?show=186234)
