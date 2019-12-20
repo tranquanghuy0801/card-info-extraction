@@ -1,0 +1,176 @@
+
+Processing cccd01jpg
+
+Predicted ID: 079098009941	True ID: 079098009941
+Similarity: 1.0  -  Correct ID
+Predicted Name: LYTHANHPHONG	True Name: LYTHANHPHONG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 12011998	True DOB: 12011998
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd02jpg
+
+Predicted ID: 001198017205	True ID: 001198017205
+Similarity: 1.0  -  Correct ID
+Predicted Name: FAKERNGUYENHIEU	True Name: FAKERNGUYENHIEU
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 12082003	True DOB: 12062003
+Similarity: 0.875  -  Wrong DOB
+
+Processing cccd03jpg
+
+Predicted ID: 026099003096	True ID: 026099003096
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENBAHOAN	True Name: NGUYENBAHOAN
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 05121990	True DOB: 05121990
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd04jpg
+
+Predicted ID: 034089005291	True ID: 034089005291
+Similarity: 1.0  -  Correct ID
+Predicted Name: TRANVANTRUNG	True Name: TRANVANTRUNG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 06012029	True DOB: 06011989
+Similarity: 0.625  -  Wrong DOB
+
+Processing cccd05jpg
+
+Predicted ID: 001185013800	True ID: 001185013800
+Similarity: 1.0  -  Correct ID
+Predicted Name: LEHONGVAN	True Name: LEHONGVAN
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 01061985	True DOB: 01061985
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd06jpg
+
+Predicted ID: 001199016793	True ID: 001199016793
+Similarity: 1.0  -  Correct ID
+Predicted Name: TRUONGTHIMYHANH	True Name: TRUONGTHIMYHANH
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 25011999	True DOB: 25011999
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd07jpg
+
+Predicted ID: 038159001769	True ID: 038159001769
+Similarity: 1.0  -  Correct ID
+Predicted Name: PHAMTHIDUC	True Name: PHAMTHIDUC
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 10071959	True DOB: 10071959
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd08jpg
+
+Predicted ID: 001198016073	True ID: 001198016073
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGOBAOTRAM	True Name: NGOBAOTRAM
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 22021998	True DOB: 22021998
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd09jpg
+
+Predicted ID: 001089000098	True ID: 001089000098
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGONGOCTHIET	True Name: NGONGOCTHIET
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 09121989	True DOB: 09121989
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd10jpg
+
+Predicted ID: 026185001505	True ID: 026185001505
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENQUANIT	True Name: NGUYENQUANIT
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 01081985	True DOB: 01081985
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd11jpg
+
+Predicted ID: 038184001089	True ID: 038184001089
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENTHITOAN	True Name: NGUYENTHITOAN
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 20061984	True DOB: 20061984
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd12jpg
+
+Predicted ID: 031199002377	True ID: 031199002377
+Similarity: 1.0  -  Correct ID
+Predicted Name: DOANTHITHANHTHAO	True Name: DOANTHITHANHTHAO
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 12061999	True DOB: 12061999
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd13jpg
+
+Predicted ID: 031093007280	True ID: 031093007280
+Similarity: 1.0  -  Correct ID
+Predicted Name: DUONGVANBINH	True Name: DUONGVANBINH
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 09071993	True DOB: 09071993
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd14jpg
+
+Predicted ID: 035193001447	True ID: 035193001447
+Similarity: 1.0  -  Correct ID
+Predicted Name: VUTHIMINHHANG	True Name: VUTHIMINHHANG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 19101993	True DOB: 19101993
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd15jpg
+
+Predicted ID: 031087002402	True ID: 031087002402
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENNHATDUONG	True Name: NGUYENNHATDUONG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 25071987	True DOB: 25071987
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd16jpg
+
+Predicted ID: 037088002243	True ID: 037088002243
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENNHATLONG	True Name: NGUYENNHATLONG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 18021988	True DOB: 18021988
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd17jpg
+
+Predicted ID: 001088024	True ID: 001088024639
+Similarity: 0.8571428571428571  -  Wrong ID
+Predicted Name: PHAMHADIEU	True Name: PHAMHADIEU
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 02101988	True DOB: 02101988
+Similarity: 1.0  -  Correct DOB
+
+Processing cccd18jpg
+
+Predicted ID: 038090009130	True ID: 038090009130
+Similarity: 1.0  -  Correct ID
+Predicted Name: PHAMVANTHU	True Name: PHAMVANTHU
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 08041990	True DOB: 08041990
+Similarity: 1.0  -  Correct DOB
+
+The statistics displays below:
+
+The ID accuracy: 99.206 %
+
+The Name accuracy: 100.0 %
+
+The DOB accuracy: 97.222 %
+
+The ID correct: 17/18
+
+The Name correct: 18/18
+
+The DOB correct: 16/18

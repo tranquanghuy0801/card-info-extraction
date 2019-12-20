@@ -1,0 +1,104 @@
+
+Processing 1jpg
+
+Predicted ID: 031089005643	True ID: 031089005643
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGOVANPHUC	True Name: NGOVANPHUC
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 12011989	True DOB: 12011989
+Similarity: 1.0  -  Correct DOB
+
+Processing 2jpg
+
+Predicted ID: 079093001016	True ID: 079093001016
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENDANH	True Name: NGUYENCONGDANH
+Similarity: 0.8333333333333334  -  Wrong Name
+Predicted DOB: 17071993	True DOB: 17071993
+Similarity: 1.0  -  Correct DOB
+
+Processing 3jpg
+
+Predicted ID: 034072002642	True ID: 034072002642
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENTIENVAN	True Name: NGUYENTIENVAN
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 06041972	True DOB: 06041972
+Similarity: 1.0  -  Correct DOB
+
+Processing 4jpg
+
+Predicted ID: 001088013869	True ID: 001088013869
+Similarity: 1.0  -  Correct ID
+Predicted Name: VUBACHA	True Name: VUBACHA
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 06091988	True DOB: 06091988
+Similarity: 1.0  -  Correct DOB
+
+Processing 5jpg
+
+Predicted ID: 034099003616	True ID: 034099003616
+Similarity: 1.0  -  Correct ID
+Predicted Name: BUIDUCTHANG	True Name: BUIDUCTHANG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 12021999	True DOB: 12021999
+Similarity: 1.0  -  Correct DOB
+
+Processing 6jpg
+
+Predicted ID: 034197001823	True ID: 034197001823
+Similarity: 1.0  -  Correct ID
+Predicted Name: NGUYENTHINGOCOANH	True Name: NGUYENTHINGOCOANH
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 19111997	True DOB: 19111997
+Similarity: 1.0  -  Correct DOB
+
+Processing 7jpg
+
+Predicted ID: 036097001929	True ID: 036097001929
+Similarity: 1.0  -  Correct ID
+Predicted Name: TRANNGOCPHUC	True Name: TRANNGOCPHUC
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 04011997	True DOB: 04011997
+Similarity: 1.0  -  Correct DOB
+
+Processing 8jpg
+
+Predicted ID: 001184014074	True ID: 001184014074
+Similarity: 1.0  -  Correct ID
+Predicted Name: FAKERNGUYENTINH	True Name: FAKERNGUYENTINH
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 06041995	True DOB: 06041995
+Similarity: 1.0  -  Correct DOB
+
+Processing 9jpg
+
+Predicted ID: 001197012990	True ID: 001197012990
+Similarity: 1.0  -  Correct ID
+Predicted Name: LENGOCQUYNH	True Name: LENGOCQUYNH
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 15051997	True DOB: 15051997
+Similarity: 1.0  -  Correct DOB
+
+Processing 10jpg
+
+Predicted ID: 036300007385	True ID: 036300007385
+Similarity: 1.0  -  Correct ID
+Predicted Name: HOANGKIMTRANG	True Name: HOANGKIMTRANG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 10022000	True DOB: 10022000
+Similarity: 1.0  -  Correct DOB
+
+The statistics displays below:
+
+The ID accuracy: 100.0 %
+
+The Name accuracy: 98.333 %
+
+The DOB accuracy: 100.0 %
+
+The ID correct: 10/10
+
+The Name correct: 9/10
+
+The DOB correct: 10/10

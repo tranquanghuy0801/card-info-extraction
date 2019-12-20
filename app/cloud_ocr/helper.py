@@ -70,11 +70,11 @@ def getTextGoogleOCR(image, language):
 
     image_context = vision.types.ImageContext(language_hints=[language])
 
-    response = client.text_detection(
+    response = client.document_text_detection(
         image=image,
         image_context=image_context
     )
-    texts = response.text_annotations
+    texts = response.full_text_annotation
 
     return texts
 

@@ -1,5 +1,5 @@
 from unidecode import unidecode
-from cloud_ocr.helper import (read_local_image, url_to_image, countLowerCase, countNumbers, countUpperCase, getTextGoogleOCR, remove_words, common_words, name_lines,
+from helper import (read_local_image, url_to_image, countLowerCase, countNumbers, countUpperCase, getTextGoogleOCR, remove_words, common_words, name_lines,
                     process_upper_words, save_cropped_name, extract_img_name, save_folder)
 import io
 from urllib.request import urlopen
