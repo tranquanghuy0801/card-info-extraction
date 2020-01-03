@@ -1,4 +1,3 @@
-
 Processing 1jpg
 
 Predicted ID: B4818195	True ID: B4818195
@@ -48,8 +47,8 @@ Processing 6jpg
 
 Predicted ID: B6519028	True ID: B6519028
 Similarity: 1.0  -  Correct ID
-Predicted Name: NGUYENTHEHIENVIET	True Name: NGUYENTHEHIEN
-Similarity: 0.8666666666666667  -  Wrong Name
+Predicted Name: NGUYENTHEHIEN	True Name: NGUYENTHEHIEN
+Similarity: 1.0  -  Correct Name
 Predicted DOB: 07031987	True DOB: 07031987
 Similarity: 1.0  -  Correct DOB
 
@@ -57,8 +56,8 @@ Processing 7jpg
 
 Predicted ID: C4354361	True ID: C4354361
 Similarity: 1.0  -  Correct ID
-Predicted Name: VUVANHUONGVIET	True Name: VUVANHUONG
-Similarity: 0.8333333333333334  -  Wrong Name
+Predicted Name: VUVANHUONG	True Name: VUVANHUONG
+Similarity: 1.0  -  Correct Name
 Predicted DOB: 25021994	True DOB: 25021994
 Similarity: 1.0  -  Correct DOB
 
@@ -100,11 +99,11 @@ Similarity: 1.0  -  Correct DOB
 
 Processing 12jpg
 
-Predicted ID: C0161180	True ID: C0161180
+Predicted ID: B9220351	True ID: B9220351
 Similarity: 1.0  -  Correct ID
-Predicted Name: LETHIMYLINHVIETNAM	True Name: LETHIMYLINH
-Similarity: 0.7586206896551724  -  Wrong Name
-Predicted DOB: 05081996	True DOB: 05081996
+Predicted Name: TRANTHIMYPHUONG	True Name: TRANTHIMYPHUONG
+Similarity: 1.0  -  Correct Name
+Predicted DOB: 25051996	True DOB: 25051996
 Similarity: 1.0  -  Correct DOB
 
 Processing 13jpg
@@ -129,8 +128,8 @@ Processing 15jpg
 
 Predicted ID: C1043753	True ID: C1043753
 Similarity: 1.0  -  Correct ID
-Predicted Name: TRANVIPHUONGVIET	True Name: TRANVIPHUONG
-Similarity: 0.8571428571428571  -  Wrong Name
+Predicted Name: TRANVIPHUONG	True Name: TRANVIPHUONG
+Similarity: 1.0  -  Correct Name
 Predicted DOB: 01011984	True DOB: 01011984
 Similarity: 1.0  -  Correct DOB
 
@@ -138,8 +137,8 @@ Processing 16jpg
 
 Predicted ID: B7293811	True ID: B7293811
 Similarity: 1.0  -  Correct ID
-Predicted Name: RCOMHDJUINVIETNAM	True Name: RCOMHDJUIN
-Similarity: 0.7407407407407407  -  Wrong Name
+Predicted Name: RCOMHDJUIN	True Name: RCOMHDJUIN
+Similarity: 1.0  -  Correct Name
 Predicted DOB: 26011995	True DOB: 26011995
 Similarity: 1.0  -  Correct DOB
 
@@ -149,8 +148,8 @@ Predicted ID: B8297182	True ID: B8297182
 Similarity: 1.0  -  Correct ID
 Predicted Name: NGUYENVANHUAN	True Name: NGUYENVANHUAN
 Similarity: 1.0  -  Correct Name
-Predicted DOB: 16161986	True DOB: 16051986
-Similarity: 0.75  -  Wrong DOB
+Predicted DOB: 16051986	True DOB: 16051986
+Similarity: 1.0  -  Correct DOB
 
 Processing 18jpg
 
@@ -174,8 +173,8 @@ Processing 20jpg
 
 Predicted ID: C3183762	True ID: C3183762
 Similarity: 1.0  -  Correct ID
-Predicted Name: NGUYENBAVANVIET	True Name: NGUYENBAVAN
-Similarity: 0.8461538461538461  -  Wrong Name
+Predicted Name: NGUYENBAVAN	True Name: NGUYENBAVAN
+Similarity: 1.0  -  Correct Name
 Predicted DOB: 27051985	True DOB: 27051985
 Similarity: 1.0  -  Correct DOB
 
@@ -183,12 +182,12 @@ The statistics displays below:
 
 The ID accuracy: 99.375 %
 
-The Name accuracy: 93.744 %
+The Name accuracy: 99.231 %
 
-The DOB accuracy: 98.75 %
+The DOB accuracy: 100.0 %
 
 The ID correct: 19/20
 
-The Name correct: 13/20
+The Name correct: 19/20
 
-The DOB correct: 19/20
+The DOB correct: 20/20

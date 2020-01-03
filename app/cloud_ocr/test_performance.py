@@ -1,13 +1,10 @@
 import os 
 import glob 
+import pandas as pd
 import logging 
 import argparse
 import re
 from difflib import SequenceMatcher
-
-class style:
-    BOLD = '\033[1m'
-    END = '\033[0m'
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -16,7 +13,9 @@ ap.add_argument("-t", "--test", required=True,
 ap.add_argument("-r", "--reference", required=True,
                 help="the reference file containing the true result")
 ap.add_argument("-l","--logs",required=True,
-                help="The name of logs file containing the comparison result")
+                help="The name of logs file containing the log result")
+ap.add_argument("-c","--csv",required=True,
+                help="The name of csv file containing the comparison result")   
 args = vars(ap.parse_args())
 
 main_dir = os.getcwd()
@@ -33,6 +32,7 @@ logger.addHandler(fh)
 def similarity_score(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
+
 # Get file number from the input string 
 def getFileNum(text):
     text = text.split(',')[0]
@@ -40,7 +40,12 @@ def getFileNum(text):
     text = re.sub('[^0-9]+','', text)
     return int(text)
 
-lines = [] 
+lines = [] # Save the lines from the test file 
+
+list_id_acc = []
+list_name_acc = [] 
+list_dob_acc = [] 
+
 # Similarity scores 
 id_acc = 0 
 name_acc = 0
@@ -78,9 +83,11 @@ with open(main_dir + "/" + args["reference"],"r") as file:
         id_acc += id_sim_score
         if(str(process_file[1]) == str(reference_file[1])):
             id_correct += 1 
+            list_id_acc.append(1)
             print("Correct ID")
             logger.debug("Similarity: " + str(id_sim_score) + "  -  Correct ID")
         else:
+            list_id_acc.append(0)
             logger.debug("Similarity: " + str(id_sim_score) + "  -  Wrong ID")
         print('\t The ID score: "{}"'.format(round(id_sim_score,4)))
 
@@ -91,9 +98,11 @@ with open(main_dir + "/" + args["reference"],"r") as file:
         print('\t The Name score: "{}"'.format(round(name_sim_score,4)))
         if(str(process_file[2]) == str(reference_file[2])):
             name_correct += 1 
+            list_name_acc.append(1)
             print("Correct Name")
             logger.debug("Similarity: " + str(name_sim_score) + "  -  Correct Name")
         else:
+            list_name_acc.append(0)
             logger.debug("Similarity: " + str(name_sim_score) + "  -  Wrong Name")
 
         # DOB processing
@@ -104,9 +113,11 @@ with open(main_dir + "/" + args["reference"],"r") as file:
         dob_acc += dob_sim_score           
         if(str(process_file[3]) == str(reference_file[3])):
             dob_correct += 1 
+            list_dob_acc.append(1)
             print("Correct DOB")
             logger.debug("Similarity: " + str(dob_sim_score) + "  -  Correct DOB")
         else:
+            list_dob_acc.append(0)
             logger.debug("Similarity: " + str(dob_sim_score) + "  -  Wrong DOB")
         print('\t The DOB score: "{}"'.format(round(dob_sim_score,4)))
 
@@ -132,4 +143,8 @@ logger.debug('\nThe DOB accuracy: ' + str(round(dob_acc/num_img * 100,3)) + ' %'
 logger.debug('\nThe ID correct: ' + str(id_correct) + '/' + str(num_img))
 logger.debug('\nThe Name correct: ' + str(name_correct) + '/' + str(num_img))
 logger.debug('\nThe DOB correct: ' + str(dob_correct) + '/' + str(num_img))
+
+# Create DataFrame to save file as CSV 
+df = pd.DataFrame({'Image': list(range(1,num_img+1)),'Name': list_name_acc,'ID': list_id_acc,'DOB': list_dob_acc})
+df.to_csv(args['csv'],index=False)
     

@@ -11,7 +11,7 @@ client = vision.ImageAnnotatorClient()
 remove_words = ["DKHK", "NO", "TP", "A", "KI", "ĐKHK", "P",
                 "Q", "KP", "VNM", "P.", "N°", "NAMESE", "VIETNAMESE","HỌ","HỘ"]
 common_words = ["CONG", "HOA", "XA", "HOI",
-                "CHU", "NGHIA", "VIET", "NAM", "HO", "CHIEU", "GIAY CHUNG", "MINH", "NHAN", "DAN", "CỘNG", "HÒA", "CHỦ", "NGHĨA", "VIỆT", "NAM", "GIẤY", "CHỨNG", "MINH", "NHÂN", "DÂN"]
+                "CHU", "NGHIA", "VIET", "NAM", "HO", "CHIEU", "GIAY CHUNG", "MINH", "NHAN", "DAN"]
 name_lines = ["Ho", "Họ", "tên", "ten"]
 
 # # Output folder to save cropped images having only name
@@ -70,11 +70,11 @@ def getTextGoogleOCR(image, language):
 
     image_context = vision.types.ImageContext(language_hints=[language])
 
-    response = client.document_text_detection(
+    response = client.text_detection(
         image=image,
         image_context=image_context
     )
-    texts = response.full_text_annotation
+    texts = response.text_annotations
 
     return texts
 

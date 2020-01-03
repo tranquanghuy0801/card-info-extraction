@@ -93,8 +93,8 @@ Processing cccd11jpg
 
 Predicted ID: 038184001089	True ID: 038184001089
 Similarity: 1.0  -  Correct ID
-Predicted Name: NGUYENTHITOAN	True Name: NGUYENTHITOAN
-Similarity: 1.0  -  Correct Name
+Predicted Name: NGUYENTHITOANNET	True Name: NGUYENTHITOAN
+Similarity: 0.896551724137931  -  Wrong Name
 Predicted DOB: 20061984	True DOB: 20061984
 Similarity: 1.0  -  Correct DOB
 
@@ -165,12 +165,12 @@ The statistics displays below:
 
 The ID accuracy: 99.206 %
 
-The Name accuracy: 100.0 %
+The Name accuracy: 99.425 %
 
 The DOB accuracy: 97.222 %
 
 The ID correct: 17/18
 
-The Name correct: 18/18
+The Name correct: 17/18
 
 The DOB correct: 16/18

@@ -13,14 +13,14 @@ import glob
 
 
 # construct the argument parse and parse the arguments
-# ap = argparse.ArgumentParser()
-# ap.add_argument("-i", "--input", required=True,
-#                 help="the input folder containing images for OCR")
-# ap.add_argument("-o", "--output",
-#                 help="the output folder containing json file")
-# ap.add_argument("-c", "--choice", required=True,
-#                 help="1: process single ID image, 2: process a folder of ID images, 3: process passport image")
-# args = vars(ap.parse_args())
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--input", required=True,
+                help="the input folder containing images for OCR")
+ap.add_argument("-o", "--output",
+                help="the output folder containing json file")
+ap.add_argument("-c", "--choice", required=True,
+                help="1: process single ID image, 2: process a folder of ID images, 3: process passport image")
+args = vars(ap.parse_args())
 
 passport_letters = ["C","B","N","c","n","b"]
 
@@ -72,14 +72,16 @@ def detect_text(num_choice, input_data, save_path=save_folder):
     upper_list = {}
 
     # Use local image
-    # image = read_local_image(input_data)
+    image = read_local_image(input_data)
 
     # Use url to read image
-    image  = url_to_image(input_data)
+    # image  = url_to_image(input_data)
     cv2.imwrite('output.png', image)
 
     # Get all text read by Google OCR
     texts = getTextGoogleOCR(image, "vi")
+
+    print(texts)
 
     if len(texts) > 0:
         print('Texts:')
@@ -121,7 +123,7 @@ def detect_text(num_choice, input_data, save_path=save_folder):
                 if re.compile('[@_!#$%^&*()<>?/\|}{~:-]').search(text.description) == None and len(text.description.strip()) > 0:
                     vertices = (['({},{})'.format(vertex.x, vertex.y)
                                  for vertex in text.bounding_poly.vertices])
-                    if text.description in common_words:
+                    if unidecode(text.description) in common_words:
                         upper_list[text.description] = vertices
                     else:
                         if text.description not in upper_list:
@@ -217,5 +219,5 @@ def main_run(args):
         print("Invalid option to process")
 
 
-# if __name__ == '__main__':
-#     main_run(args)
+if __name__ == '__main__':
+    main_run(args)

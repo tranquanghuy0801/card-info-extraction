@@ -12,8 +12,8 @@ Processing 2jpg
 
 Predicted ID: 079093001016	True ID: 079093001016
 Similarity: 1.0  -  Correct ID
-Predicted Name: NGUYENDANH	True Name: NGUYENCONGDANH
-Similarity: 0.8333333333333334  -  Wrong Name
+Predicted Name: NGUYENCONGDANH	True Name: NGUYENCONGDANH
+Similarity: 1.0  -  Correct Name
 Predicted DOB: 17071993	True DOB: 17071993
 Similarity: 1.0  -  Correct DOB
 
@@ -93,12 +93,12 @@ The statistics displays below:
 
 The ID accuracy: 100.0 %
 
-The Name accuracy: 98.333 %
+The Name accuracy: 100.0 %
 
 The DOB accuracy: 100.0 %
 
 The ID correct: 10/10
 
-The Name correct: 9/10
+The Name correct: 10/10
 
 The DOB correct: 10/10
