@@ -25,3 +25,32 @@ python3 app/cloud_ocr/test_performance.py -t <test_file> -r <reference_file>
 
 
 [Data For Images](https://drive.base.vn/huytran02-drive?show=186234)
+
+# API Documentation
+
+<b> POST Request </b>
+
+```
+POST /api/info HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+	"data": (url of image),
+	"choice": (1: ID cards - 3: Passport)
+}
+```
+
+<b> Response </b>
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+	"id": "my_id",
+    "name": "my_name",
+    "dob": "my_dob"
+}
+```
+
+<b> Code: 404 - Message (ID, Name or DOB not found) </b>
