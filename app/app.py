@@ -35,6 +35,14 @@ def getID():
         response = {'id': None,'name': None,'dob': None}
         return jsonify(response)
 
+@app.errorhandler(404)
+def notFound(error):
+    return jsonify({'Error code': 404, 'Error message':'Not found'})
+ 
+@app.errorhandler(403)
+def permissionDenied(error):
+    return jsonify({'Error code': 403, 'Error message':'Permission Denied'})
+
 if __name__ == "__main__":
     # start flask app
-    app.run(port='5000',debug=True,host='0.0.0.0')
+    app.run(port='5000',debug=False,host='0.0.0.0')

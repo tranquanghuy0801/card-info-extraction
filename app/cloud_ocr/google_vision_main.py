@@ -1,6 +1,6 @@
 from unidecode import unidecode
-from helper import (read_local_image, url_to_image, countLowerCase, countNumbers, countUpperCase, getTextGoogleOCR, remove_words, common_words, name_lines,
-                    process_upper_words, save_cropped_name, extract_img_name, save_folder)
+from cloud_ocr.helper import (read_local_image, url_to_image, countLowerCase, countNumbers, countUpperCase, getTextGoogleOCR, remove_words, common_words, name_lines,
+                    filter_dict, save_cropped_name, extract_img_name, save_folder)
 import io
 from urllib.request import urlopen
 from datetime import datetime
@@ -11,24 +11,13 @@ import cv2
 import re
 import glob
 
-
-# construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--input", required=True,
-                help="the input folder containing images for OCR")
-ap.add_argument("-o", "--output",
-                help="the output folder containing json file")
-ap.add_argument("-c", "--choice", required=True,
-                help="1: process single ID image, 2: process a folder of ID images, 3: process passport image")
-args = vars(ap.parse_args())
-
 passport_letters = ["C","B","N","c","n","b"]
 
-# Return name in the image
+# get name from image having name only
 def getName(image):
     if image is not None:
-        name = unidecode(getTextGoogleOCR(image, "vi")
-                         [0].description.split('/n')[0].replace("HỌ","").replace("Họ",""))
+        text = getTextGoogleOCR(image, "vi")[0].description.split('/n')[0]
+        name = unidecode(text.replace("HỌ","").replace("Họ",""))
         name = re.sub('[^A-Za-z0-9]+', ' ', name)
         name = name.rstrip().lstrip()
         name = ' '.join(word for word in name.split(
@@ -37,45 +26,44 @@ def getName(image):
     else:
         return None
 
-
-def getDOBDirect(text, num_list):
+# return DOB list with strings having length 7 or 8: -> [11-11-2012]
+def getDOBDirect(text, dob_direct):
     if (countNumbers(text.description) == 8 or countNumbers(text.description) == 7) and (text.description.find('/') != -1 or text.description.find('-') != -1):
         if text.description.find('/') != -1:
-            num_list.append(re.sub('[^0-9/]+', '', text.description))
+            dob_direct.append(re.sub('[^0-9/]+', '', text.description))
         elif text.description.find('-') != -1:
             text.description = text.description.replace('-', '/')
-            num_list.append(re.sub('[^0-9/]+', '', text.description))
-    return num_list
+            dob_direct.append(re.sub('[^0-9/]+', '', text.description))
+    return dob_direct
 
-
-def getDOBSeparate(text, dob_list):
+# return DOB list having number only for extra processing steps: -> [11-,11-,2012]
+def getDOBSeparate(text, dob_separate):
     if countNumbers(text.description) <= 8 and countNumbers(text.description) > 1 and countLowerCase(text.description) == 0 and countUpperCase(text.description) == 0:
         vertices = (['({},{})'.format(vertex.x, vertex.y)
                      for vertex in text.bounding_poly.vertices])
-        dob_list[text.description] = vertices
-    return dob_list
+        dob_separate[text.description] = vertices
+    return dob_separate
 
 
 # Extract name, card ID and DOB from each image
-
 def detect_text(num_choice, input_data, save_path=save_folder):
     """Detects text in the file."""
 
     # Initialize variables
-    thresh_dob_pp = None
-    thresh_name_pp = None
     card_id = None
     name = None
     dob = None
-    num_list = []
-    dob_list = {}
-    upper_list = {}
+    thresh_dob_pp = None  # Threshold of dob location to extract appropriate words
+    thresh_name_pp = None # Threshold of name location to extract appropriate names
+    dob_direct = [] # return of function getDOBDirect()
+    dob_separate = {} # return of function getDOBSeparate()
+    upper_words = {} # save uppercase words with coordinates into upper_words dict
 
     # Use local image
-    image = read_local_image(input_data)
+    #image = read_local_image(input_data)
 
     # Use url to read image
-    # image  = url_to_image(input_data)
+    image  = url_to_image(input_data)
     cv2.imwrite('output.png', image)
 
     # Get all text read by Google OCR
@@ -90,6 +78,7 @@ def detect_text(num_choice, input_data, save_path=save_folder):
             text.description = re.sub(
                 '[@_!#$%^&*()<>?\|}{~:.]', ' ', text.description)
             print(text.description)
+
             if text.description.find("Full") != -1 and int(num_choice) == 3:
                 thresh_name_pp = text.bounding_poly.vertices[0].y
             elif text.description in name_lines and (int(num_choice) == 1 or int(num_choice) == 2):
@@ -108,7 +97,7 @@ def detect_text(num_choice, input_data, save_path=save_folder):
                     text.description = text.description.capitalize()
                     card_id = text.description[-8:]
                     card_id = re.sub('[^0-9CBN]+', '', str(card_id))
-            # Get ID Card / The can cuoc
+            # Get ID Card 
             else:
                 if countNumbers(text.description) >= 9:
                     if len(str(text.description)) == 9:
@@ -117,27 +106,28 @@ def detect_text(num_choice, input_data, save_path=save_folder):
                         card_id = text.description[-12:]
                 card_id = re.sub('[^0-9]+', '', str(card_id))
 
-            # Extract name
+            # Extract uppercase words and saved in upper_words dict
             if countLowerCase(text.description) == 0 and countNumbers(text.description) == 0 and countUpperCase(text.description) <= 7\
                     and text.description.strip() not in remove_words:
                 if re.compile('[@_!#$%^&*()<>?/\|}{~:-]').search(text.description) == None and len(text.description.strip()) > 0:
                     vertices = (['({},{})'.format(vertex.x, vertex.y)
                                  for vertex in text.bounding_poly.vertices])
                     if unidecode(text.description) in common_words:
-                        upper_list[text.description] = vertices
+                        upper_words[text.description] = vertices
                     else:
-                        if text.description not in upper_list:
-                            upper_list[text.description] = vertices
+                        if text.description not in upper_words:
+                            upper_words[text.description] = vertices
 
-            # Extract DOB
+            # Extract DOB list 
             if int(num_choice) != 3:
-                num_list = getDOBDirect(text, num_list)
+                dob_direct = getDOBDirect(text, dob_direct)
             else:
-                dob_list = getDOBSeparate(text, dob_list)
+                dob_separate = getDOBSeparate(text, dob_separate)
 
-            if len(num_list) == 0:
-                dob_list = getDOBSeparate(text, dob_list)
+            if len(dob_direct) == 0:
+                dob_separate = getDOBSeparate(text, dob_separate)
 
+            # Print for debugging
             # print('\n"{}"'.format(text.description))
             # vertices = (['({},{})'.format(vertex.x, vertex.y)
             #             for vertex in text.bounding_poly.vertices])
@@ -146,36 +136,42 @@ def detect_text(num_choice, input_data, save_path=save_folder):
 
         # Get the final name
         try:
-            # Get the image having name only
-            # img_crop_name = extract_img_name(
-            #     image, upper_list, thresh_name_pp)
+            """
+            Extract name using Google OCR for image having name only
 
+            # Get the image having name only
+            # img_crop_name = extract_img_name(image, upper_words, thresh_name_pp)
+
+    
             # save_cropped_name(img_crop_name, input_data, num_choice)
 
-            # # Use Google OCR again to get the name only
             # name = getName(img_crop_name)
+            """
 
-            name = ' '.join(unidecode(element) for element in list(process_upper_words(
-                    upper_list, thresh_name_pp).keys()))
-            name = name.lstrip().rstrip()
+            name = ' '.join(element for element in list(filter_dict(upper_words, thresh_name_pp).keys()))
+            name = unidecode(name.lstrip().rstrip())
             name = re.sub('[^A-Z]+', ' ', name)
 
+            # set name = None if the name has less than 2 words
+            if len(name.split(' ')) <= 1:
+                name = None
 
-            # if len(name.split(' ')) <= 1:
-            #     name = None
         except:
             pass
 
         # Get the final card ID and DOB
         try:
-            if len(num_list) > 0:
-                dob = num_list[0]
+            if len(dob_direct) > 0:
+                dob = dob_direct[0]
             else:
-                dob = ''.join(element for element in list(process_upper_words(
-                    dob_list, thresh_dob_pp).keys())).replace('/', '')
-                dob = dob.replace(' ', '')
+                dob = ''.join(element for element in list(filter_dict(dob_separate, thresh_dob_pp).keys()))
+                dob = dob.replace('/', '').replace(' ', '')
+
+                # Having similar month and date: (11/2012 -> 11/11/2012) 
                 if len(dob) == 6:
                     dob = dob[0:2] + dob 
+
+                # Convert to right format: D/M/Y
                 dob = datetime.strptime(
                     dob.strip(), '%d%m%Y').strftime('%d/%m/%Y')
         except:
@@ -193,6 +189,8 @@ def detect_text(num_choice, input_data, save_path=save_folder):
 # Main OCR application with arguments
 def main_run(args):
     input_folder = os.getcwd() + "/" + args["input"]
+
+    # Process single ID or passport
     if (int(args["choice"]) == 1 or int(args["choice"]) == 3) and not args["output"]:
         if args["input"].endswith('.jpg') == True:
             card_id, name, dob = detect_text(args["choice"], args["input"])
@@ -200,6 +198,7 @@ def main_run(args):
         else:
             print('Wrong input data')
 
+    # Process a folder of IDs or passports
     elif int(args["choice"]) == 2 or int(args["choice"]) == 3:
         if not args["output"]:
             print('Missing the output text filename (-o)')
@@ -219,5 +218,14 @@ def main_run(args):
         print("Invalid option to process")
 
 
-if __name__ == '__main__':
-    main_run(args)
+# if __name__ == '__main__':
+#     construct the argument parse and parse the arguments
+#     ap = argparse.ArgumentParser()
+#     ap.add_argument("-i", "--input", required=True,
+#                     help="the input folder containing images for OCR")
+#     ap.add_argument("-o", "--output",
+#                     help="the output folder containing json file")
+#     ap.add_argument("-c", "--choice", required=True,
+#                     help="1: process single ID image, 2: process a folder of ID images, 3: process passport image")
+#     args = vars(ap.parse_args())
+#     main_run(args)

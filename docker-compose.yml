@@ -1,0 +1,11 @@
+version: "3.6"
+
+services:
+  app:
+    image: api_card:lastest
+    container_name: api_card
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+      - 5000:5000

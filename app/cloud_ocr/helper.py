@@ -5,6 +5,7 @@ import re
 import numpy as np
 from urllib.request import urlopen
 
+# Save Google OCR credentials into environment
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'harrytext-ocr.json'
 client = vision.ImageAnnotatorClient()
 
@@ -18,51 +19,37 @@ name_lines = ["Ho", "Họ", "tên", "ten"]
 save_folder = "data/crop_name"
 
 # count the total numbers from the input string
-
-
 def countNumbers(inputString):
     return sum(c.isdigit() for c in inputString)
 
 # Count upperCase from input string
-
-
 def countUpperCase(inputString):
     return sum(1 for c in inputString if c.isupper())
 
 # Count number of lowercase from input string
-
-
 def countLowerCase(inputString):
     return sum(1 for c in inputString if c.islower())
 
 # Return image with url
-
-
 def url_to_image(url, readFlag=cv2.IMREAD_COLOR):
-    # download the image, convert it to a NumPy array, and then read
-    # it into OpenCV format
+    # download the image, convert it to a NumPy array
     resp = urlopen(url)
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
+
+    # convert into CV2 format and resize the image
     image = cv2.imdecode(image, readFlag)
     image = cv2.resize(image, (800, 650))
 
-    # return the image
     return image
 
 # Return image with local input path
-
-
 def read_local_image(input_path):
-
     image = cv2.imread(input_path)
     image = cv2.resize(image, (800, 650))
     return image
 
 # Return texts with coordinates from Google API
-
-
 def getTextGoogleOCR(image, language):
-
     success, encoded_image = cv2.imencode('.jpg', image)
     content = encoded_image.tobytes()
 
@@ -78,10 +65,7 @@ def getTextGoogleOCR(image, language):
 
     return texts
 
-# Cropped the required part of image with list of coordinate and input image
-# Extract the input image based on list of coordinates
-
-
+# Cropped the input image (input_image) based list of coordinates (coord_list)  
 def cropped_image(coord_list, input_image):
     start_point = eval(coord_list[list(coord_list.keys())[0]][0])
     print(start_point)
@@ -91,45 +75,40 @@ def cropped_image(coord_list, input_image):
         1]-10:list(end_point)[1]+10, list(start_point)[0]-10:list(end_point)[0]+15, :]
     return img_crop_name
 
-# Filter all uppercase words to extract appropriate coordinates for cropped image having name only
-
-
-def process_upper_words(upper_list, thresh):
+# return filtered upper_words dict
+def filter_dict(upper_words, thresh):
     try:
-        # Reorder the uppercase words nearest the thresh
-        upper_list = sorted(upper_list.items(), key=lambda k: abs(
+        # Sort the uppercase words based on distance to thresh
+        upper_words = sorted(upper_words.items(), key=lambda k: abs(
             int(round(thresh))-int(re.findall(r'\b\d+\b', k[1][0])[1])), reverse=False)
-        print(upper_list)
-        if len(upper_list) > 0:
+        print(upper_words)
+        if len(upper_words) > 0:
             # Filter uppercase words with y distance less than 18px
-            num_ref = int(re.findall(r'\b\d+\b', upper_list[0][1][1])[1])
-            upper_list = {v[0]: v[1] for v in upper_list if abs(
+            num_ref = int(re.findall(r'\b\d+\b', upper_words[0][1][1])[1])
+            upper_words = {v[0]: v[1] for v in upper_words if abs(
                 num_ref - int(re.findall(r'\b\d+\b', v[1][1])[1])) <= 18}
-        upper_list = dict((sorted(upper_list.items(), key=lambda k: int(
+
+        upper_words = dict((sorted(upper_words.items(), key=lambda k: int(
             re.findall(r'\b\d+\b', k[1][0])[0]))))
     except:
         pass
-    return upper_list
+    return upper_words
 
 # Extract the part of image having only name
-
-
-def extract_img_name(input_image, upper_list, thresh):
+def extract_img_name(input_image, upper_words, thresh):
     img_crop_name = None
     try:
-        upper_list = process_upper_words(input_image, upper_list, thresh)
-        print(upper_list)
-        img_crop_name = cropped_image(upper_list, input_image)
+        upper_words = filter_dict(input_image, upper_words, thresh)
+        print(upper_words)
+        img_crop_name = cropped_image(upper_words, input_image)
 
     except:
         pass
     return img_crop_name
 
 # Save the cropped image having name only
-
-
 def save_cropped_name(image, input_path, num_choice):
-    # Save the cropped image with name
+
     if image is not None:
         if int(num_choice) == 1 or int(num_choice) == 3:
             print(save_folder + '/crop_output.jpg')
