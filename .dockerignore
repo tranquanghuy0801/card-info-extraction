@@ -1,5 +1,5 @@
 data/
-app/local_ocr/
+local-ocr/
 results/
 harry-ocr/
 *.png 
@@ -12,3 +12,5 @@ output_test.txt
 README.md
 __pycache__
 .vscode
+client.py
+.gitignore

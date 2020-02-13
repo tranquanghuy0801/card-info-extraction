@@ -1,42 +1,58 @@
-FROM ubuntu:18.04 
+# FROM ubuntu:18.04 
 
-MAINTAINER Huy Tran "huy.tran02@base.vn"
+# MAINTAINER Huy Tran "huy.tran02@base.vn"
 
+# RUN apt-get update -y \
+#     && apt-get install -y \
+#     python3-dev \
+#     python3-pip \
+#     libsm6 \
+#     libxext6 \
+#     build-essential\
+#     pkg-config 
+
+# COPY . /app
+
+# WORKDIR /app
+
+# RUN pip3 install -r requirements.txt
+
+# RUN pip3 install gunicorn
+
+# RUN mkdir log
+
+# RUN touch log/logger.log
+
+# CMD ["gunicorn", "--workers=2", "--worker-class=gthread", "-b 0.0.0.0:5000", "server:app", "--log-level=debug", "--log-file=log/logger.log"]
+
+# EXPOSE 5000
+
+FROM ubuntu:18.04
 RUN apt-get update -y \
-    && apt-get install -y \
-    python3-dev \
-    python3-pip \
-    libsm6 \
-    libxext6 \
-    build-essential\
-    pkg-config \
-    gunicorn3
+    && apt install python3 -y \
+    && apt install python3-pip -y \
+    && apt install python3-venv -y 
 
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-COPY app /app
-
-COPY requirements.txt /app/requirements.txt
-
-COPY harrytext-ocr.json /app/harrytext-ocr.json
-
+# Install dependencies:
+COPY . /app
 WORKDIR /app
 
-RUN pip3 install -r requirements.txt
+RUN pip install flask opencv-python google-cloud-vision unidecode gunicorn
 
-RUN mkdir log
-
-RUN touch log/logger.log
-
-CMD ["gunicorn3", "--workers=1", "--worker-class=gthread", "-b 0.0.0.0:5000", "app:app", "--log-level=debug", "--log-file=log/logger.log"]
-
+# Run the application:
 EXPOSE 5000
+CMD ["gunicorn", "--workers=2", "--worker-class=gthread", "-b 0.0.0.0:5000", "server:app"]
 
 
 # FROM python:3.6
 # WORKDIR /app
 # COPY . /app
-# RUN pip install flask opencv-python google-cloud-vision unidecode
+# RUN pip install flask opencv-python google-cloud-vision unidecode gunicorn
 # EXPOSE 5000 
-# ENTRYPOINT [ "python3","app/app.py"]
+# CMD ["gunicorn", "--workers=2", "--worker-class=gthread", "-b 0.0.0.0:5000", "server:app"]
 
 
