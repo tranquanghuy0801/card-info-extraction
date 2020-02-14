@@ -1,14 +1,12 @@
 data/
+csv/
+logs/
 local-ocr/
 results/
-harry-ocr/
+ocr-card/
 *.png 
 *.jpg 
 *.zip
-old_card.txt 
-output_old_card.txt 
-output_train.txt
-output_test.txt
 README.md
 __pycache__
 .vscode

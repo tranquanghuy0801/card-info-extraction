@@ -1,37 +1,49 @@
 ## Card Info Extraction
 
-# Run the Dockerfile
+# Create virtual environment
+```
+NAME_ENV = "ocr-card"
+virtualenv -p python3 $NAME_ENV
+source $NAME_ENV/bin/activate
+pip install -r requirements.txt 
+```
+
+# Get the dataset
+```
+chmod +x get_dataset.sh
+./get_dataset.sh
+```
+
+# Test the result 
+
+<b>Get the test results for a folder of images</b>
+
+Uncomment the last piece of code in file "cloud_ocr/google_vision_main.py"
+
+```
+python3 cloud_ocr/google_vision_main.py -i <input_data> -o <output_file> -c <num_choice>
+
+python3 cloud_ocr/google_vision_main.py -i data/train_data -o results/train_data.txt -c 1
+```
+
+<b> View accuracy of test results</b>
+
+```
+python3 cloud_ocr/test_performance.py -t <test_file> -r <reference_file> -l <file_log>
+
+python3 cloud_ocr/test_performance.py -t results/train_data.txt -r data/train_data/train.txt -l logs/train_data.log
+```
+
+![screenshot  of command line](results/screenshot.jpg)
+
+# Run API using Docker
+
+Change <b>from helper import *</b> into <b>from cloud_ocr.helper import *</b>
 
 ```
 docker-compose build
 docker-compose up 
 ```
-
-# Test the result 
-
-<b>Run the commands to view the test result (Card ID, Name, DOB)</b>
-
-```
-git clone git@git.base.vn:huytran/card-info-extraction.git && cd card-info-extraction
-python3 virtualenv -p python3 <NAME-ENV>
-source <NAME-ENV>/bin/activate
-pip install -r requirements.txt 
-python3 cloud_ocr/test_performance.py -t <test_file> -r <reference_file>
-```
-
-<b> We have each pair of files like this (test_file - reference_file)</b>
-
-```
-(results/output_test.txt - data/test_data/test.txt)
-(results/output_train.txt - data/train_data/train.txt)
-(results/output_old_card.txt - data/old_card/old_card.txt)
-(results/output_passport.txt - data/passport/passport.txt)
-```
-
-![screenshot  of command line](results/screenshot.jpg)
-
-
-[Data For Images](https://drive.base.vn/huytran02-drive?show=186234)
 
 # API Documentation
 
@@ -43,7 +55,15 @@ Content-Type: application/json; charset=utf-8
 
 {
 	"data": (url of image),
-	"choice": (1: ID cards - 3: Passport)
+	"choice": (1: ID cards - 2: Passport)
+}
+```
+
+Example:
+```
+{
+	"data": "https://d1plicc6iqzi9y.cloudfront.net/sites/default/files/image/201806/25/trinh-thi-oanh_img_0_0.JPEG",
+	"choice": 1
 }
 ```
 
@@ -61,5 +81,24 @@ Content-Type: application/json; charset=utf-8
 ```
 
 <b> Code: 404 - Message (ID, Name or DOB not found) </b>
+
+<b> Example
+
+POST Request (Run POSTMAN or python client.py)
+```
+{
+	"data": "https://d1plicc6iqzi9y.cloudfront.net/sites/default/files/image/201806/25/trinh-thi-oanh_img_0_0.JPEG",
+	"choice": 1
+}
+```
+
+Response
+```
+{
+    "dob": "22/04/1994",
+    "id": "174190596",
+    "name": "TRINH THI OANH"
+}
+```
 
 # Python Version (3.6.8)

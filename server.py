@@ -5,25 +5,27 @@ import numpy as np
 import cv2 
 from cloud_ocr.google_vision_main import detect_text
 
-# Kill the server 
-# kill -9 $(lsof -t -i:5000)
-
 list_extensions = [".jpeg",".png",".jpg",".bmp",".PNG",".JPEG",".JPG",".BMP"]
 
 # Initialize the app and set a secret_key.
 app = Flask(__name__)
 
-
 @app.route("/api/info", methods=['POST'])
 def getID():
         
-    # decode image
-    data = request.get_json(force=True) 
+    data = request.get_json(force=True)
+
+    # Get the image url 
     input_path = str(data['data']).replace('\n','').strip()
+
+    # Get url extension
     ext = os.path.splitext(input_path)[1]
+
+    # Get the num choice for either passport or ID card
     num_choice = int(str(data['choice']).strip())
+
     # check the extension of input data 
-    if ext in list_extensions and (num_choice == 1 or num_choice == 3):
+    if ext in list_extensions and (num_choice == 1 or num_choice == 2):
         # get card_id,name,dob from input image 
         card_id,name,dob = detect_text(num_choice,input_path)
 

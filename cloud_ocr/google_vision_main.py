@@ -1,6 +1,5 @@
 from unidecode import unidecode
-from cloud_ocr.helper import (read_local_image, url_to_image, countLowerCase, countNumbers, countUpperCase, getTextGoogleOCR, remove_words, common_words, name_lines,
-                    filter_dict, save_cropped_name, extract_img_name, save_folder)
+from cloud_ocr.helper import *
 import io
 from urllib.request import urlopen
 from datetime import datetime
@@ -60,11 +59,12 @@ def detect_text(num_choice, input_data, save_path=save_folder):
     upper_words = {} # save uppercase words with coordinates into upper_words dict
 
     # Use local image
-    #image = read_local_image(input_data)
-
-    # Use url to read image
-    image  = url_to_image(input_data)
-    cv2.imwrite('output.png', image)
+    if input_data.find('/home') == -1:
+        # Use url to read image
+        image  = url_to_image(input_data) 
+    else:
+        # Use local image
+        image = read_local_image(input_data)
 
     # Get all text read by Google OCR
     texts = getTextGoogleOCR(image, "vi")
@@ -79,9 +79,9 @@ def detect_text(num_choice, input_data, save_path=save_folder):
                 '[@_!#$%^&*()<>?\|}{~:.]', ' ', text.description)
             print(text.description)
 
-            if text.description.find("Full") != -1 and int(num_choice) == 3:
+            if text.description.find("Full") != -1 and num_choice == 3:
                 thresh_name_pp = text.bounding_poly.vertices[0].y
-            elif text.description in name_lines and (int(num_choice) == 1 or int(num_choice) == 2):
+            elif text.description in name_lines and (num_choice == 1 or num_choice == 2):
                 thresh_name_pp = text.bounding_poly.vertices[0].y
 
             if text.description.find("Sex") != -1:
@@ -92,7 +92,7 @@ def detect_text(num_choice, input_data, save_path=save_folder):
 
             # Extract ID
             # Get passport number
-            if int(num_choice) == 3:
+            if num_choice == 3:
                 if countNumbers(text.description) == 7 and text.description[0] in passport_letters:
                     text.description = text.description.capitalize()
                     card_id = text.description[-8:]
@@ -119,7 +119,7 @@ def detect_text(num_choice, input_data, save_path=save_folder):
                             upper_words[text.description] = vertices
 
             # Extract DOB list 
-            if int(num_choice) != 3:
+            if num_choice != 3:
                 dob_direct = getDOBDirect(text, dob_direct)
             else:
                 dob_separate = getDOBSeparate(text, dob_separate)
@@ -189,23 +189,25 @@ def detect_text(num_choice, input_data, save_path=save_folder):
 # Main OCR application with arguments
 def main_run(args):
     input_folder = os.getcwd() + "/" + args["input"]
+    num_choice = int(args["choice"])
+    outfile = args["output"]
 
     # Process single ID or passport
-    if (int(args["choice"]) == 1 or int(args["choice"]) == 3) and not args["output"]:
+    if (num_choice == 1 or num_choice == 2) and not outfile:
         if args["input"].endswith('.jpg') == True:
-            card_id, name, dob = detect_text(args["choice"], args["input"])
+            card_id, name, dob = detect_text(num_choice, args["input"])
             print('The OCR process is completed')
         else:
             print('Wrong input data')
 
     # Process a folder of IDs or passports
-    elif int(args["choice"]) == 2 or int(args["choice"]) == 3:
-        if not args["output"]:
+    elif (num_choice == 1 or num_choice == 2):
+        if not outfile:
             print('Missing the output text filename (-o)')
         else:
-            f = open(args["output"], "w")
+            f = open(outfile, "w")
             for filename in glob.glob(os.path.join(input_folder, '*.jpg')):
-                card_id, name, dob = detect_text(args["choice"], filename)
+                card_id, name, dob = detect_text(num_choice, filename)
                 filename = filename.replace(input_folder + "/", '')
                 output = filename + ',' + \
                     str(card_id) + ',' + str(name) + ',' + str(dob) + '\n'
@@ -219,7 +221,7 @@ def main_run(args):
 
 
 # if __name__ == '__main__':
-#     construct the argument parse and parse the arguments
+#     #construct the argument parse and parse the arguments
 #     ap = argparse.ArgumentParser()
 #     ap.add_argument("-i", "--input", required=True,
 #                     help="the input folder containing images for OCR")
