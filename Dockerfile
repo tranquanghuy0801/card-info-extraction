@@ -5,17 +5,19 @@ RUN apt-get update -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Create virtual environment
 ENV VIRTUAL_ENV=/venv PATH="/venv/bin:$PATH"
 RUN python -m venv /venv
 
-# Install dependencies:
+# Copy files
 COPY . /app
 WORKDIR /app
 
+# Install dependencies
 RUN pip install -r requirements.txt
 
+# Create log file
 RUN mkdir log
-
 RUN touch log/logger.log
 
 # Run the application:

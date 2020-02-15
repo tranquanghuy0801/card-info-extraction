@@ -59,14 +59,6 @@ Content-Type: application/json; charset=utf-8
 }
 ```
 
-Example:
-```
-{
-	"data": "https://d1plicc6iqzi9y.cloudfront.net/sites/default/files/image/201806/25/trinh-thi-oanh_img_0_0.JPEG",
-	"choice": 1
-}
-```
-
 <b> Response </b>
 
 ```
