@@ -14,6 +14,13 @@ chmod +x get_dataset.sh
 ./get_dataset.sh
 ```
 
+# Google Vision API 
+
+Replace the credentials json file in cloud_ocr/helper.py
+```
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '*******.json'
+```
+
 # Test the result 
 
 <b>Get the test results for a folder of images</b>

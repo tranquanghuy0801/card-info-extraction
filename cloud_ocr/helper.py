@@ -6,7 +6,8 @@ import numpy as np
 from urllib.request import urlopen
 
 # Save Google OCR credentials into environment
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'harrytext-ocr.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '*******.json'
+
 client = vision.ImageAnnotatorClient()
 
 remove_words = ["DKHK", "NO", "TP", "A", "KI", "ĐKHK", "P",
